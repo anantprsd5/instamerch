@@ -25,8 +25,8 @@ class ImagesController < ApplicationController
 
   def get_designs
     task_id = params[:task_id]
-    result = { main: 'https://your-app-name.onrender.com/images/1.jpg',
-               others: %w[https://your-app-name.onrender.com/images/2.jpg https://your-app-name.onrender.com/images/3.jpg https://your-app-name.onrender.com/images/4.jpg] }
+    result = { main: 'https://instamerch-backend.onrender.com/images/1.jpg',
+               others: %w[https://instamerch-backend.onrender.com/images/2.jpg https://instamerch-backend.onrender.com/images/3.jpg https://instamerch-backend.onrender.com/images/4.jpg] }
     if result
       render json: { status: 'completed', mockup: result }
     else
