@@ -26,6 +26,10 @@ class ImagesController < ApplicationController
     render json: { task_id: task_id }
   end
 
+  def testing_it
+    render json: { status: 'It works' }
+  end
+
   def task_status
     task_id = params[:task_id]
     result = Rails.cache.read(task_id)

@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   post 'process_image', to: 'images#process_image'
   get 'task_status', to: 'images#task_status'
+  get 'testing_it', to: 'images#testing_it'
 end
