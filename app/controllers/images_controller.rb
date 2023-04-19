@@ -5,10 +5,19 @@ class ImagesController < ApplicationController
     # Generate a unique task ID
     task_id = SecureRandom.uuid
 
-    # Store the Base64 encoded image in a temporary file
+    # Store the Base64 encoded image, text, and style in a temporary JSON file
     image_data = params[:image]
-    tmp_file = Rails.root.join('tmp', task_id)
-    File.write(tmp_file, Base64.decode64(image_data))
+    text_data = params[:text]
+    style_data = params[:style]
+
+    task_data = {
+      image: image_data,
+      text: text_data,
+      style: style_data,
+    }
+
+    tmp_file = Rails.root.join('tmp', "#{task_id}.json")
+    File.write(tmp_file, task_data.to_json)
 
     # Process the image asynchronously
     ProcessImageJob.perform_later(task_id)

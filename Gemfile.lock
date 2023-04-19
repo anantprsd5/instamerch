@@ -71,6 +71,7 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    byebug (11.1.3)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
     daemons (1.4.1)
@@ -175,6 +176,7 @@ PLATFORMS
 DEPENDENCIES
   active_storage_base64
   bootsnap
+  byebug
   daemons
   debug
   delayed_job_active_record
