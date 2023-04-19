@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   post 'process_image', to: 'images#process_image'
   get 'task_status', to: 'images#task_status'
   get 'testing_it', to: 'images#testing_it'
+  post 'designs', to: 'images#create_designs'
+  get 'designs', to: 'images#get_designs'
 end
