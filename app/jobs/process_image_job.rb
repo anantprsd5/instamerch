@@ -92,6 +92,7 @@ class ProcessImageJob
           "style_preset" => style_data
         }
       )
+      Rails.logger.error(response)
       response["artifacts"].each_with_index do |image, i|
         File.open("#{task_id}.jpg", "wb") do |f|
           f.write(Base64.decode64(image["base64"]))
