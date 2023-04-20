@@ -7,11 +7,39 @@ class ImageResize
 
       image.change_geometry!("#{new_width}x#{new_height}") do |cols, rows, img|
         resized_image = img.resize(cols, rows)
-        output_path = "#{image_path}_resized.jpg"
+        output_path = "#{image_path}"
         resized_image.write(output_path)
 
         output_path
       end
+    end
+
+    def generate_tshirt_mockup
+      # Replace 'your_api_key_here' with your Printful API key
+      printful_service = PrintfulServices.new('IbjsKZFmPS4Vz7ajAnchREdlGnTlYHN7KHcpmE1O')
+
+        result = printful_service.generate_mockup('https://i.ibb.co/kqc4zfB/v1-upscaled-image.png')
+
+        if result
+          mockup_url = result['mockup']['url']
+          output_file_path = 'path/to/output/image.jpg'
+
+          # Save the mockup image as a JPG file
+          File.open(output_file_path, 'wb') do |output_file|
+            open(mockup_url) do |input|
+              output_file.write(input.read)
+            end
+          end
+
+          # Do something with the output_file_path, e.g., render the mockup image
+        else
+          # Handle errors, e.g., show an error message
+        end
+    end
+
+    def check_progress
+      printful_service = PrintfulServices.new('IbjsKZFmPS4Vz7ajAnchREdlGnTlYHN7KHcpmE1O')
+      printful_service.check_mockup_task("gt-504391194")
     end
 
 

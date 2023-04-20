@@ -16,42 +16,7 @@ class ImagesController < ApplicationController
       style: style_data,
     }
 
-    # Process the image asynchronously
-    # ProcessImageJob.perform_later(task_id)
-
-    # Return the task ID to the frontend
-    render json: { task_id: task_id }
-  end
-
-  def get_designs
-    task_id = params[:task_id]
-    result = { main: 'https://instamerch-backend.onrender.com/images/1.jpg',
-               others: %w[https://instamerch-backend.onrender.com/images/2.jpg https://instamerch-backend.onrender.com/images/3.jpg https://instamerch-backend.onrender.com/images/4.jpg] }
-    if result
-      render json: { status: 'completed', mockup: result }
-    else
-      render json: { status: 'pending' }
-    end
-  end
-
-  def process_image
-    # Generate a unique task ID
-    task_id = SecureRandom.uuid
-
-    # Store the Base64 encoded image, text, and style in a temporary JSON file
-    image_data = params[:image]
-    text_data = params[:text]
-    style_data = params[:style]
-
-    task_data = {
-      image: image_data,
-      text: text_data,
-      style: style_data,
-    }
-
-    tmp_file = Rails.root.join('tmp', "#{task_id}.json")
-    File.write(tmp_file, task_data.to_json)
-
+    save_task_data_to_json_file(task_id, task_data)
     # Process the image asynchronously
     ProcessImageJob.perform_later(task_id)
 
@@ -59,18 +24,35 @@ class ImagesController < ApplicationController
     render json: { task_id: task_id }
   end
 
-  def testing_it
-    render json: { status: 'It works' }
-  end
-
-  def task_status
+  def get_designs
     task_id = params[:task_id]
-    result = Rails.cache.read(task_id)
+    result = load_final_results_json_file(task_id)
 
     if result
       render json: { status: 'completed', mockup: result }
     else
       render json: { status: 'pending' }
+    end
+  end
+
+  def testing_it
+    render json: { status: 'It works' }
+  end
+
+  private
+
+  def save_task_data_to_json_file(task_id, task_data)
+    File.open("#{task_id}.json", 'w') do |file|
+      file.write(task_data.to_json)
+    end
+  end
+
+  def load_final_results_json_file(task_id)
+    file_path = "#{task_id}_result.json"
+    if File.exist?(file_path)
+      JSON.parse(File.read(file_path))
+    else
+      nil
     end
   end
 end
