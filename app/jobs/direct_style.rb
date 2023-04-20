@@ -7,7 +7,7 @@ class DirectStyle
       mockups = print_on_tshirt(task_id)
       delete_task_data_json_file(task_id)
       delete_image_file(task_id)
-      save_final_results_to_file(task_id, { "main" => mockups })
+      return { "main" => mockups }
     end
 
     def save_final_results_to_file(task_id, task_data)

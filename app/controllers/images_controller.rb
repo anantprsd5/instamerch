@@ -18,10 +18,9 @@ class ImagesController < ApplicationController
 
     save_task_data_to_json_file(task_id, task_data)
     # Process the image asynchronously
-    ProcessImageJob.perform_later(task_id)
+    mockups = ProcessImageJob.perform(task_id)
 
-    # Return the task ID to the frontend
-    render json: { task_id: task_id }
+    render json: mockups
   end
 
   def get_designs
