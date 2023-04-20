@@ -1,5 +1,3 @@
-require 'rmagick'
-
 class ImageResize
   class << self
     def resize_image(image_path, new_width: 768, new_height: 768)
