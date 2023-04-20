@@ -20,7 +20,6 @@ gem 'dotenv-rails' # For managing environment variables
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'http-form_data'
-gem 'rmagick'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"

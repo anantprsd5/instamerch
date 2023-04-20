@@ -7,7 +7,6 @@ class ProcessImageJob < ApplicationJob
 
   def perform(task_id)
     Rails.logger.info "Just started"
-    resize_image(task_id)
     Rails.logger.info "Finished resizing"
     stylize_image(task_id)
     upscale_image(task_id)
@@ -69,6 +68,7 @@ class ProcessImageJob < ApplicationJob
 
   def stylize_image(task_id)
     task_data = load_task_data_from_json_file(task_id)
+    decode_base64_image(task_data["image"], "#{task_id}.jpg")
     text_data = task_data['text']
     style_data = task_data['style']
     image_file = File.open("#{task_id}.jpg", "rb")

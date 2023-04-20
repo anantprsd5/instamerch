@@ -47,7 +47,6 @@ class DirectStyle
 
     def resize_image(task_id)
       task_data = load_task_data_from_json_file(task_id)
-      byebug
       decode_base64_image(task_data["image"], "#{task_id}.jpg")
       ImageResize.resize_image("#{task_id}.jpg")
     end
