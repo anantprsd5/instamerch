@@ -24,15 +24,16 @@ class ProcessImageJob < ApplicationJob
     task_data = JSON.parse(File.read(tmp_file))
 
     image_data = task_data['image']
-    text_data = task_data['text']
+    text_data = task_data['text'] || 'make the tshirt red'
     style_data = task_data['style']
 
     # Decode the Base64 encoded image data
     image_data = Base64.decode64(image_data)
+    image_file = File.open('public/images/1.jpg_resized.jpg', "rb")
 
-    engine_id = "stable-diffusion-v1-5"
+    engine_id = "stable-diffusion-xl-beta-v2-2-2"
     api_host = ENV["API_HOST"] || "https://api.stability.ai"
-    api_key = ENV["STABILITY_API_KEY"]
+    api_key = ENV["STABILITY_API_KEY"] || 'sk-N0lLDwQZlSzzKFQ1CKgiXVbi0AUmXaDW97e3LWbcJcb9lmd8'
 
     raise "Missing Stability API key." if api_key.nil?
 
@@ -45,7 +46,7 @@ class ProcessImageJob < ApplicationJob
         "Authorization" => "Bearer #{api_key}"
       },
       body: {
-        "init_image" => image_data,
+        "init_image" => image_file,
         "image_strength" => 0.35,
         "init_image_mode" => "IMAGE_STRENGTH",
         "text_prompts[0][text]" => prompt,
@@ -53,7 +54,8 @@ class ProcessImageJob < ApplicationJob
         "clip_guidance_preset" => "FAST_BLUE",
         "samples" => 1,
         "steps" => 30,
-      }
+      },
+      debug_output: $stdout
     )
 
     raise "Non-200 response: #{response.body}" if response.code != 200
