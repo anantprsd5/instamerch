@@ -67,7 +67,8 @@ class ProcessImageJob
 
     def stylize_image(task_id)
       task_data = load_task_data_from_json_file(task_id)
-      decode_base64_image(task_data["image"], "#{task_id}.jpg")
+      image = task_data["image"].split(",", 2).second
+      decode_base64_image(image, "#{task_id}.jpg")
       text_data = task_data['text']
       style_data = task_data['style']
       image_file = File.open("#{task_id}.jpg", "rb")
