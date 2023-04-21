@@ -40,7 +40,6 @@ class ProcessImageJob
         response = printful_service.check_mockup_task(task_key)
         status = response.dig("result", "status")
         break if response.dig("result", "status") == "failed"
-
         if status == 'completed'
           response.dig("result", "mockups").each do |mockup|
             mockups << mockup["mockup_url"]
@@ -48,6 +47,7 @@ class ProcessImageJob
               mockups << ex["url"]
             end
           end
+          break
         end
       end
       return mockups
