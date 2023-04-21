@@ -30,7 +30,7 @@ class ProcessImageJob
     end
 
     def print_on_tshirt(task_id)
-      printful_service = PrintfulServices.new('IbjsKZFmPS4Vz7ajAnchREdlGnTlYHN7KHcpmE1O')
+      printful_service = PrintfulServices.new('<YOUR_API_KEY>')
       result = printful_service.generate_mockup("https://instamerch-backend.onrender.com/images/#{task_id}.jpg")
       Rails.logger.info "https://instamerch-backend.onrender.com/images/#{task_id}.jpg"
       task_key = result.dig("result", "task_key")
@@ -75,7 +75,7 @@ class ProcessImageJob
       image_file = File.open("#{task_id}.jpg", "rb")
       engine_id = "stable-diffusion-768-v2-1"
       api_host = "https://api.stability.ai"
-      api_key = 'sk-N0lLDwQZlSzzKFQ1CKgiXVbi0AUmXaDW97e3LWbcJcb9lmd8'
+      api_key = '<YOUR_API_KEY>'
       response = HTTParty.post(
         "#{api_host}/v1/generation/#{engine_id}/image-to-image",
         headers: {

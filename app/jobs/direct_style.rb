@@ -23,7 +23,7 @@ class DirectStyle
     end
 
     def print_on_tshirt(task_id)
-      printful_service = PrintfulServices.new('IbjsKZFmPS4Vz7ajAnchREdlGnTlYHN7KHcpmE1O')
+      printful_service = PrintfulServices.new('<YOUR_API_KEY>')
       result = printful_service.generate_mockup("https://instamerch-backend.onrender.com/images/#{task_id}.jpg")
       task_key = result.dig("result", "task_key")
       mockups = []
@@ -65,7 +65,7 @@ class DirectStyle
       image_file = File.open("#{task_id}.jpg", "rb")
       engine_id = "stable-diffusion-768-v2-1"
       api_host = "https://api.stability.ai"
-      api_key = 'sk-N0lLDwQZlSzzKFQ1CKgiXVbi0AUmXaDW97e3LWbcJcb9lmd8'
+      api_key = '<YOUR_API_KEY>'
       response = HTTParty.post(
         "#{api_host}/v1/generation/#{engine_id}/image-to-image",
         headers: {
@@ -94,7 +94,7 @@ class DirectStyle
     def upscale_image(task_id)
       engine_id = "esrgan-v1-x2plus"
       api_host = "https://api.stability.ai"
-      api_key = 'sk-N0lLDwQZlSzzKFQ1CKgiXVbi0AUmXaDW97e3LWbcJcb9lmd8'
+      api_key = '<YOUR_API_KEY>'
 
       response = HTTParty.post(
         "#{api_host}/v1/generation/#{engine_id}/image-to-image/upscale",
@@ -144,7 +144,7 @@ class DirectStyle
 
       engine_id = "stable-diffusion-xl-beta-v2-2-2"
       api_host = ENV["API_HOST"] || "https://api.stability.ai"
-      api_key = ENV["STABILITY_API_KEY"] || 'sk-N0lLDwQZlSzzKFQ1CKgiXVbi0AUmXaDW97e3LWbcJcb9lmd8'
+      api_key = ENV["STABILITY_API_KEY"] || '<YOUR_API_KEY>'
 
       raise "Missing Stability API key." if api_key.nil?
 

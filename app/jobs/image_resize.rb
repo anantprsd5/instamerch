@@ -14,7 +14,7 @@ class ImageResize
 
     def generate_tshirt_mockup
       # Replace 'your_api_key_here' with your Printful API key
-      printful_service = PrintfulServices.new('IbjsKZFmPS4Vz7ajAnchREdlGnTlYHN7KHcpmE1O')
+      printful_service = PrintfulServices.new('<YOUR_API_KEY>')
 
         result = printful_service.generate_mockup('https://i.ibb.co/kqc4zfB/v1-upscaled-image.png')
 
@@ -36,7 +36,7 @@ class ImageResize
     end
 
     def check_progress
-      printful_service = PrintfulServices.new('IbjsKZFmPS4Vz7ajAnchREdlGnTlYHN7KHcpmE1O')
+      printful_service = PrintfulServices.new('<YOUR_API_KEY>')
       printful_service.check_mockup_task("gt-504391194")
     end
 
@@ -47,7 +47,7 @@ class ImageResize
 
       engine_id = "stable-diffusion-768-v2-1"
       api_host = ENV["API_HOST"] || "https://api.stability.ai"
-      api_key = ENV["STABILITY_API_KEY"] || 'sk-N0lLDwQZlSzzKFQ1CKgiXVbi0AUmXaDW97e3LWbcJcb9lmd8'
+      api_key = ENV["STABILITY_API_KEY"] || '<YOUR_API_KEY>'
 
       raise "Missing Stability API key." if api_key.nil?
 
@@ -83,7 +83,7 @@ class ImageResize
     def upscale_image
       engine_id = "esrgan-v1-x2plus"
       api_host = "https://api.stability.ai"
-      api_key = 'sk-N0lLDwQZlSzzKFQ1CKgiXVbi0AUmXaDW97e3LWbcJcb9lmd8'
+      api_key = '<YOUR_API_KEY>'
 
       response = HTTParty.post(
         "#{api_host}/v1/generation/#{engine_id}/image-to-image/upscale",
@@ -108,7 +108,7 @@ class ImageResize
       api_host = ENV['API_HOST'] || 'https://api.stability.ai'
       url = "#{api_host}/v1/engines/list"
 
-      api_key = 'sk-N0lLDwQZlSzzKFQ1CKgiXVbi0AUmXaDW97e3LWbcJcb9lmd8'
+      api_key = '<YOUR_API_KEY>'
       raise "Missing Stability API key." if api_key.nil?
 
       response = HTTParty.get(url, headers: { "Authorization" => "Bearer #{api_key}" })
