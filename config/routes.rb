@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get 'testing_it', to: 'images#testing_it'
   post 'designs', to: 'images#create_designs'
   get 'designs', to: 'images#get_designs'
+  post 'test_designs', to: 'images#test_designs'
 end
