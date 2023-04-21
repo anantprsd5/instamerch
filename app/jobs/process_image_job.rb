@@ -32,6 +32,7 @@ class ProcessImageJob
     def print_on_tshirt(task_id)
       printful_service = PrintfulServices.new('IbjsKZFmPS4Vz7ajAnchREdlGnTlYHN7KHcpmE1O')
       result = printful_service.generate_mockup("https://instamerch-backend.onrender.com/images/#{task_id}.jpg")
+      Rails.logger.info "https://instamerch-backend.onrender.com/images/#{task_id}.jpg"
       task_key = result.dig("result", "task_key")
       mockups = []
       loop do
